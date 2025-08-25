@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Poker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen">
+            <div class="login-container">
+                <h1>🎰 Multiplayer Poker</h1>
+                <div class="login-form">
+                    <input type="text" id="playerName" placeholder="Enter your name" maxlength="20">
+                    <button id="joinGameBtn">Join Game</button>
+                </div>
+                <div class="game-info">
+                    <p>💰 Starting chips: 1000</p>
+                    <p>👥 Players: 2-8</p>
+                    <p>🎯 Game type: Texas Hold'em</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="screen hidden">
+            <div class="game-header">
+                <h2>Poker Table</h2>
+                <div class="game-status">
+                    <span id="gamePhase">Waiting for players...</span>
+                    <span id="pot">Pot: $0</span>
+                </div>
+            </div>
+
+            <div class="poker-table">
+                <!-- Community Cards -->
+                <div class="community-cards">
+                    <div class="card-placeholder" id="flop1"></div>
+                    <div class="card-placeholder" id="flop2"></div>
+                    <div class="card-placeholder" id="flop3"></div>
+                    <div class="card-placeholder" id="turn"></div>
+                    <div class="card-placeholder" id="river"></div>
+                </div>
+
+                <!-- Players -->
+                <div class="players-container" id="playersContainer">
+                    <!-- Players will be dynamically added here -->
+                </div>
+
+                <!-- Current Player Actions -->
+                <div class="player-actions" id="playerActions">
+                    <div class="action-buttons">
+                        <button id="foldBtn" class="action-btn fold">Fold</button>
+                        <button id="callBtn" class="action-btn call">Call</button>
+                        <button id="raiseBtn" class="action-btn raise">Raise</button>
+                    </div>
+                    <div class="raise-controls">
+                        <input type="range" id="raiseSlider" min="1" max="100" value="10">
+                        <span id="raiseAmount">$10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Hand -->
+            <div class="player-hand" id="playerHand">
+                <div class="card-placeholder" id="card1"></div>
+                <div class="card-placeholder" id="card2"></div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="screen hidden">
+            <div class="game-over-container">
+                <h2>Hand Complete!</h2>
+                <div id="winnerInfo"></div>
+                <button id="continueBtn">Continue to Next Hand</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
