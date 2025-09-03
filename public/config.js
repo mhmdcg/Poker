@@ -3,7 +3,7 @@ const config = {
     // Backend URL - change this when deploying
     backendUrl: window.location.hostname === 'localhost' 
         ? 'http://localhost:3000'  // Local development
-        : 'https://your-render-app.onrender.com', // Production - UPDATE THIS!
+        : 'https://poker-ijem.onrender.com', // Production - Your Render backend!
     
     // Game settings
     maxPlayers: 9,
