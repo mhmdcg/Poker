@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Poker Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-card">
+            <div class="logo">
+                <h1>♠️ ♥️ Live Poker ♣️ ♦️</h1>
+                <p class="subtitle">Texas Hold'em with Friends</p>
+            </div>
+            
+            <div class="join-form">
+                <h2>Join a Game</h2>
+                <div class="input-group">
+                    <label for="playerName">Your Name:</label>
+                    <input type="text" id="playerName" placeholder="Enter your name" maxlength="20">
+                </div>
+                
+                <div class="input-group">
+                    <label for="roomId">Room Code:</label>
+                    <input type="text" id="roomId" placeholder="Enter room code or leave empty for new game">
+                </div>
+                
+                <div class="button-group">
+                    <button id="joinBtn" class="btn btn-primary">Join Game</button>
+                    <button id="createBtn" class="btn btn-secondary">Create New Game</button>
+                </div>
+                
+                <div class="info">
+                    <p>🎮 Up to 9 players per table</p>
+                    <p>💰 Start with 1000 chips</p>
+                    <p>🌐 Real-time multiplayer</p>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h3>How to Play:</h3>
+                <ol>
+                    <li>Enter your name</li>
+                    <li>Share the room code with friends</li>
+                    <li>Wait for players to join</li>
+                    <li>Game starts automatically with 2+ players</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const socket = io(gameConfig.backendUrl);
+        
+        document.getElementById('joinBtn').addEventListener('click', () => {
+            const playerName = document.getElementById('playerName').value.trim();
+            const roomId = document.getElementById('roomId').value.trim();
+            
+            if (!playerName) {
+                alert('Please enter your name!');
+                return;
+            }
+            
+            if (roomId) {
+                // Join existing room
+                window.location.href = `/room/${roomId}?player=${encodeURIComponent(playerName)}`;
+            } else {
+                // Create new room
+                const newRoomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+                window.location.href = `/room/${newRoomId}?player=${encodeURIComponent(playerName)}`;
+            }
+        });
+        
+        document.getElementById('createBtn').addEventListener('click', () => {
+            const playerName = document.getElementById('playerName').value.trim();
+            
+            if (!playerName) {
+                alert('Please enter your name!');
+                return;
+            }
+            
+            const newRoomId = Math.random().toString(36).substring(2, 8).toUpperCase();
+            window.location.href = `/room/${newRoomId}?player=${encodeURIComponent(playerName)}`;
+        });
+        
+        // Enter key support
+        document.getElementById('playerName').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('joinBtn').click();
+            }
+        });
+        
+        document.getElementById('roomId').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('joinBtn').click();
+            }
+        });
+    </script>
+</body>
+</html>
+
